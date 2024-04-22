@@ -4,10 +4,14 @@ from nonebot.adapters.onebot.v11 import (
 )
 from nonebot.matcher import Matcher
 from .cyberfurry import *
-from nonebot.adapters.telegram.event import MessageEvent as TGevent
+
 from nonebot.adapters.onebot.v11 import MessageEvent as obV11event
 from nonebot.params import CommandArg
 from nonebot import on_command
+try:
+    from nonebot.adapters.telegram.event import MessageEvent as TGevent
+except:
+    TGevent = obV11event
 
 MessageEvent = TGevent | obV11event
 
