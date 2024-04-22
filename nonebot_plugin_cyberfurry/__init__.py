@@ -4,7 +4,7 @@ from .config import cyberfurry , config
 
 __plugin_meta__ = PluginMetadata(
     name="cyberfurry",
-    description="nonebot插件 yinying_chat 与赛博狼狼对话吧~",
+    description="nonebot插件 cyberfurry 与赛博狼狼对话吧~",
     usage='''/chat 触发对话
 cf刷新对话 刷新对话
 cf设定模型 设定使用的yinying模型
