@@ -1,0 +1,25 @@
+[project]
+name = "nonebot-plugin-cyberfurry"
+version = "1.0"
+description = "nonebot插件 cyberfurry-与赛博狼狼对话吧~"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+keywords = ["egg", "bacon", "sausage", "tomatoes", "Lobster Thermidor"]
+authors = [
+  {email = "cub_staryow@outlook.com"},
+  {name = "cubstaryow"}
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python"
+]
+
+dependencies = [
+  "nonebot-adapter-onebot"
+  "nonebot2",
+  "aiohttp"
+]
+
+[project.urls]
+repository = "https://github.com/cubstaryow/nonebot-plugin-cyberfurry"
