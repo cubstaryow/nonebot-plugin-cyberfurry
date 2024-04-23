@@ -113,7 +113,7 @@ class cyberfurry:
         exdata['message'] = msg
         try:
             data = json.dumps(exdata)
-            resp, type = await api(
+            resp, _,type = await api(
                 "post",
                 url=apiurl,
                 data=data,
