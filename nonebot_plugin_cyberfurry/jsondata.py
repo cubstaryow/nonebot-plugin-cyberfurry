@@ -6,8 +6,6 @@ jsonname = "cyberfurry.json"
 txtdir = "cyberfurry"
 bashdata = {
     "status":1,
-    "qqname":{},
-    "usermodel":{},
     "userdata":{},
     "userchat":{}
 }
@@ -21,16 +19,16 @@ def writehistory(
     text:str
 ):
     data = chat_id.split("-")
-    file_path=txt_dir+f"/{data[1]}"
+    file_path=txt_dir / f"{data[1]}"
     if not os.path.isdir(file_path):
         os.mkdir(file_path)
-    with open(file_path+"/"+data[-1]+".txt",'a') as f:
+    with open(file_path / (data[-1]+".txt"),'a') as f:
         f.write(text)
 
 def gethistorylist(
     user_id:str
 ):
-    file_path=txt_dir+f"/{user_id}/"
+    file_path=txt_dir / "{user_id}/"
     filelist = os.listdir(file_path)
     flist = []
     for name in filelist:
@@ -44,10 +42,10 @@ def gethistorytxt(
     user_id:str,
     filename:str
 ):
-    file_path=txt_dir+f"/{user_id}"
+    file_path=txt_dir / f"{user_id}"
     filelist = os.listdir(file_path)
     if filename+".txt" in filelist:
-        return file_path+"/"+filename+".txt"
+        return file_path / (filename+".txt")
     else:
         return False
 
