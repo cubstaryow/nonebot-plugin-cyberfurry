@@ -1,5 +1,5 @@
 from loguru import logger
-from .plugins_data import initdata,wdata,rdata,driver
+from .plugins_data import initdata,wdata,rdata,driver,data_dir
 import os
 from datetime import datetime
 jsonname = "cyberfurry.json"
@@ -12,15 +12,16 @@ bashdata = {
     "userchat":{}
 }
 initdata(jsonname,bashdata)
-if not os.path.isdir("plugins_data/"+txtdir):
-    os.mkdir("plugins_data/"+txtdir)
+txt_dir =  data_dir / txtdir
+if not os.path.isdir(txt_dir):
+    os.mkdir(txt_dir)
 
 def writehistory(
     chat_id:str,
     text:str
 ):
     data = chat_id.split("-")
-    file_path="plugins_data/"+txtdir+f"/{data[1]}"
+    file_path=txt_dir+f"/{data[1]}"
     if not os.path.isdir(file_path):
         os.mkdir(file_path)
     with open(file_path+"/"+data[-1]+".txt",'a') as f:
@@ -29,7 +30,7 @@ def writehistory(
 def gethistorylist(
     user_id:str
 ):
-    file_path="plugins_data/"+txtdir+f"/{user_id}/"
+    file_path=txt_dir+f"/{user_id}/"
     filelist = os.listdir(file_path)
     flist = []
     for name in filelist:
@@ -43,10 +44,10 @@ def gethistorytxt(
     user_id:str,
     filename:str
 ):
-    file_path="plugins_data/"+txtdir+f"/{user_id}"
+    file_path=txt_dir+f"/{user_id}"
     filelist = os.listdir(file_path)
     if filename+".txt" in filelist:
-        return os.getcwd()+"/"+file_path+"/"+filename+".txt"
+        return file_path+"/"+filename+".txt"
     else:
         return False
 
