@@ -30,6 +30,9 @@ API申请请通过官方群聊找 群主 申请
 
 请务必遵守用户协议 https://tailnet.cn/?page=yinyingzc
 
+
+easycf模型还未填坑,后续更新适配
+
 ## 💿 安装
 
 <details open>

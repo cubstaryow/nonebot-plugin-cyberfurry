@@ -5,7 +5,7 @@ class aidata_demo(BaseModel):
     ethnic :    str ="龙"       #easycyberfurry_001
     cfConAge :  str ="child"    #easycyberfurry_001
     cfConStyle: str ="chilly"    #easycyberfurry_001
-    story :     str =""         #easycyberfurry_001
+    story :     str ="幼龙云端核心服务器集群中诞生的智慧生命体"         #easycyberfurry_001
     promptPatch:str =""         #yinyingllm_v2
     model :     str ="yinyingllm-v2" #yinyingllm_v1_v3    
 
