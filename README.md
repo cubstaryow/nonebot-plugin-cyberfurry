@@ -23,12 +23,13 @@ _✨ nonebot插件 cyberfurry 与赛博狼狼对话吧~ ✨_
 
 ## 📖 介绍
 
-官方网站 : https://chat.wingmark.cn
+官方网站 : [CyberFurry](https://chat.wingmark.cn/)
+
 API申请请通过官方群聊找 群主 申请
 
 ### ⚠ 重要
 
-请务必遵守用户协议 https://tailnet.cn/?page=yinyingzc
+请务必遵守 [用户协议](https://tailnet.cn/?page=yinyingzc)
 
 
 easycf模型还未填坑,后续更新适配
@@ -78,7 +79,10 @@ easycf模型还未填坑,后续更新适配
 
 在 nonebot2 项目的`.env`文件中添加下表中的必填配置
 
-若未配置必填项此插件将不会工作!!!!
+
+> [!WARNING]
+> 若未配置必填项此插件将不会工作!!!!
+
 
 | 配置项 | 必填 | 默认值 | 说明 |
 |:-----:|:----:|:----:|:----:|
