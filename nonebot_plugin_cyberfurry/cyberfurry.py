@@ -35,14 +35,18 @@ class cyberfurry:
         'Content-type': 'application/json',
         'Authorization': f'Bearer {config.cf_token}'
     }
-    model = {
+    basemodel = {
         #多模型示例
         "cyberfurry": cyberfurry_001(),
         "easycyberfurry": easycyberfurry_001(),
         "yinyingllm-v1": yinyingllm_v123(),
         "yinyingllm-v2": yinyingllm_v123(),
         "yinyingllm-v3": yinyingllm_v123()
-    }.update(loadmodel())
+    }
+    model ={
+        **basemodel,
+        **loadmodel()
+        }
     localdata=loaddata()
     maxtimes = 16
     userchat = localdata.get('userchat',{})

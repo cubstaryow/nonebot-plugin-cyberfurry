@@ -15,7 +15,7 @@ try:
 except:
     TGevent = obV11event
 
-MessageEvent = TGevent | obV11event
+MessageEvent = obV11event | TGevent
 
 async def is_enable():
     return config.cf_enableistome
@@ -28,6 +28,7 @@ autorun = on_message(
 run = on_command(
     "/chat",
     aliases={"/yy","/cf"} ,
+    block=True,
     priority=25
 )
 init = on_command(
@@ -78,7 +79,7 @@ def checkethnic(ethnic):
     msg ="\n种族只支持:\n[" +"|".join(liste) + "]"
     return False ,msg
 
-@autorun.handle()
+    
 @run.handle()
 async def cyberfurryrun(
     bot:Bot,
@@ -88,7 +89,7 @@ async def cyberfurryrun(
 ):
     if len(data)==0:
         return 0
-    msg = data[0]
+    msg = str(data[0])
     user_id = str(event.user_id)
     matchObj ,_= checkmsg(msg)
     if not matchObj:
@@ -106,6 +107,20 @@ async def cyberfurryrun(
         retmsg +
         (f"\n({times}/{maxtimes},将开启新对话)" if times >=maxtimes else f"\n({times}/{maxtimes}轮对话)")
     )
+    
+@autorun.handle()
+async def cyberfurryautorun(
+    bot:Bot,
+    event:MessageEvent,
+    matcher:Matcher,
+):
+    await cyberfurryrun(
+        bot=bot,
+        event=event,
+        matcher=matcher,
+        data=[event.get_message()]
+    )
+
 @setuser.handle()
 async def cyberfurrysetuser(
     event:MessageEvent,matcher:Matcher ,args: list = CommandArg()
@@ -113,7 +128,7 @@ async def cyberfurrysetuser(
     user_id = str(event.user_id)
     if len(args) <1:
         return 0
-    data = args[0].split(" ")
+    data = str(args[0]).split(" ")
     if (len(data)>=2):
         name = data[0]
         ethnic = data[1]
@@ -155,7 +170,7 @@ async def cyberfurryset(
     event:MessageEvent,matcher:Matcher,
     data: list = CommandArg()
 ):
-    modelname = data[0]
+    modelname = str(data[0])
     user_id = str(event.user_id)
     msg="[幼龙云V5]"
     if cf.model.get(modelname,None) != None:

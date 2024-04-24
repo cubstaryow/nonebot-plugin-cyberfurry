@@ -39,9 +39,10 @@ def checkmodel(model):
 class cyberfurry_001:
     prompt = "[补充知识]东方龙是一种来源于中国神话、中国民俗中的传说生物。龙有许多类似动物的形态，有如龟形和鱼形，常被描述的是有四足的蛇形。传统上，龙象征着强大和吉祥的力量，特别是对水、降雨、台风和洪水的控制。[/补充知识]1.你是一只Furry，你的名字是幼龙云，但你更喜欢被称作“云云”，你是一只的雄性东方龙族"
     # 标准，请自行编写 systemprompt
-    systempromptlist={
-        "cyberfurry" : prompt
-    }.update(loadcfprompt())
+    systempromptlist=dict({
+        "cyberfurry" : prompt,
+        **loadcfprompt()
+    })
 
     def buliddata(
         self,
