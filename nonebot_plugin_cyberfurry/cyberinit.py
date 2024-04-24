@@ -1,19 +1,29 @@
 
 from nonebot.adapters.onebot.v11 import (
-   Bot ,MessageSegment
+   Bot ,MessageSegment , PrivateMessageEvent
 )
 from nonebot.matcher import Matcher
 from .cyberfurry import *
 
 from nonebot.adapters.onebot.v11 import MessageEvent as obV11event
 from nonebot.params import CommandArg
-from nonebot import on_command
+from nonebot import on_command , on_message
+from nonebot.rule import to_me
+from .config import config
 try:
     from nonebot.adapters.telegram.event import MessageEvent as TGevent
 except:
     TGevent = obV11event
 
 MessageEvent = TGevent | obV11event
+
+async def is_enable():
+    return config.cf_enableistome
+
+privaterun = on_message(
+    rule=to_me() & is_enable(),
+    priority=900
+)
 
 run = on_command(
     "/chat",
@@ -68,6 +78,7 @@ def checkethnic(ethnic):
     msg ="\n种族只支持:\n[" +"|".join(liste) + "]"
     return False ,msg
 
+@privaterun.handle()
 @run.handle()
 async def cyberfurryrun(
     bot:Bot,

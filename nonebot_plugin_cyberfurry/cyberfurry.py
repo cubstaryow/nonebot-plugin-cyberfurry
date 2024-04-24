@@ -18,6 +18,7 @@ from .cyberfurrymodel import (
     yinyingllm_v123,
     config
 )
+from .jsonprompt import loadmodel
 cftype = cyberfurry_001 | easycyberfurry_001 | yinyingllm_v123
 
 apiurl = "https://api-yinying-ng.wingmark.cn/v1/chatWithCyberFurry"
@@ -37,13 +38,11 @@ class cyberfurry:
     model = {
         #多模型示例
         "cyberfurry": cyberfurry_001(),
-        #"cyberfurry-性格2": cyberfurry_001(),
-        #"cyberfurry-beta": cyberfurry_001(),
         "easycyberfurry": easycyberfurry_001(),
         "yinyingllm-v1": yinyingllm_v123(),
         "yinyingllm-v2": yinyingllm_v123(),
         "yinyingllm-v3": yinyingllm_v123()
-    }
+    } + loadmodel()
     localdata=loaddata()
     maxtimes = 16
     userchat = localdata.get('userchat',{})

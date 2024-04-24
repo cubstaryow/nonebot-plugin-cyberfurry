@@ -89,6 +89,7 @@ easycf模型还未填坑,后续更新适配
 | cf_appid | 是 | 无 | API的appid |
 | cf_token | 是 | 无 | API的token |
 | cubplugin_datadir | 否 | "" | 插件数据文件夹 |
+| cf_enableistome | 否 | False | 在消息是对bot时是否启用chat |
 
 
 ## 🎉 使用
