@@ -53,7 +53,7 @@ class cyberfurry_001:
     "appId": config.cf_appid,
     "chatId":f"{config.cf_appid}-{userdata.user_id}-{chat_id}",
     "model":"cyberfurry-001",
-    "systemPrompt":str(self.systempromptlist.get(aidata.model,self.systemdata)+
+    "systemPrompt":str(self.systempromptlist.get(aidata.model,self.prompt)+
         f"现在和你对话的是{userdata.name},他是你的朋友,{userdata.name}是一只{userdata.ethnic}"),
     "message":""
     }
