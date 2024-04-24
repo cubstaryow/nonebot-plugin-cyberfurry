@@ -8,7 +8,7 @@ from .cyberfurry import *
 from nonebot.adapters.onebot.v11 import MessageEvent as obV11event
 from nonebot.params import CommandArg
 from nonebot import on_command , on_message
-from nonebot.rule import to_me
+from nonebot.rule import to_me ,Rule
 from .config import config
 try:
     from nonebot.adapters.telegram.event import MessageEvent as TGevent
@@ -20,8 +20,8 @@ MessageEvent = TGevent | obV11event
 async def is_enable():
     return config.cf_enableistome
 
-privaterun = on_message(
-    rule=to_me() & is_enable(),
+autorun = on_message(
+    rule=to_me() & Rule(is_enable),
     priority=900
 )
 
@@ -78,7 +78,7 @@ def checkethnic(ethnic):
     msg ="\n种族只支持:\n[" +"|".join(liste) + "]"
     return False ,msg
 
-@privaterun.handle()
+@autorun.handle()
 @run.handle()
 async def cyberfurryrun(
     bot:Bot,

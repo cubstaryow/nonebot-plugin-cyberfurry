@@ -1,12 +1,47 @@
+import json
+import os
 from .config import config
 from .data_source import aidata_demo ,userdata_demo
-from .jsonprompt import loadcfprompt
+
+promptfile = os.path.dirname(__file__)+"/systemprompt.json"
+def getdata():
+    with open(promptfile, "r", encoding="utf-8") as f:
+        data = json.loads(f.read())
+    return data
+def loadcfprompt():
+    data = getdata()
+    redata = {}
+    for temp in data:
+        if temp['model'] == "cyberfurry":
+            key = temp['model'] + "-" + temp["name"]
+            redata[key]=temp["prompt"]
+    return redata
+
+def loadmodel():
+    data = getdata()
+    redata = {}
+    for temp in data:
+        key = temp['model'] + "-" + temp["name"]
+        model = checkmodel(temp['model'])
+        if isinstance(model,yinyingllm_v123):
+            continue
+        redata[key]=model
+    return redata
+
+def checkmodel(model):
+    if model == "cyberfurry":
+        return cyberfurry_001()
+    elif model == "easycyberfurry":
+        return easycyberfurry_001()
+    else:
+        return yinyingllm_v123()
+
 class cyberfurry_001:
     prompt = "[补充知识]东方龙是一种来源于中国神话、中国民俗中的传说生物。龙有许多类似动物的形态，有如龟形和鱼形，常被描述的是有四足的蛇形。传统上，龙象征着强大和吉祥的力量，特别是对水、降雨、台风和洪水的控制。[/补充知识]1.你是一只Furry，你的名字是幼龙云，但你更喜欢被称作“云云”，你是一只的雄性东方龙族"
     # 标准，请自行编写 systemprompt
     systempromptlist={
         "cyberfurry" : prompt
-    }+loadcfprompt()
+    }.update(loadcfprompt())
 
     def buliddata(
         self,
