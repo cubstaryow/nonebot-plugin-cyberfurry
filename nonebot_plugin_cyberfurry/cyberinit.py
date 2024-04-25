@@ -48,6 +48,11 @@ getset = on_command(
     block=config.cf_enableistome,
     priority=25
 )
+getmodellist = on_command(
+    "cf模型列表",
+    block=config.cf_enableistome,
+    priority=25
+)
 setuser = on_command(
     "cf设定",
     block=config.cf_enableistome,
@@ -167,6 +172,15 @@ async def cyberfurrygetset(
     msg="[幼龙云V5]"
     data = getqqdata(user_id)
     msg +=f"当前模型[{data['model']}]"
+    await matcher.send(msg)
+
+@getmodellist.handle()
+async def cyberfurrygetmodellist(
+    event:MessageEvent,matcher:Matcher
+):
+    modellist = list(cf.model.keys())
+    msg =f"[cyberfurry]可用模型\n"
+    msg += "\n".join(modellist)
     await matcher.send(msg)
 
 @set.handle()
