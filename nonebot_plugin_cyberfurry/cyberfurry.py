@@ -146,16 +146,3 @@ class cyberfurry:
 
 cf = cyberfurry()
 
-
-cfConAgeMap = {
-    "可爱兽太": 'child',
-    "青年": 'young',
-    "成熟稳重": 'adult'
-}
-cfConStyleMap = {
-    "活泼": 'vivid',
-    "富有情感": 'sentiment',
-    "助理": 'assistant',
-    "冷酷无情": 'chilly',
-    "社恐": 'social_anxiety'
-}

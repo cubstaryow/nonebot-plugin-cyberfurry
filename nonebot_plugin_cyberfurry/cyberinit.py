@@ -28,25 +28,29 @@ autorun = on_message(
 run = on_command(
     "/chat",
     aliases={"/yy","/cf"} ,
-    block=True,
+    block=config.cf_enableistome,
     priority=25
 )
 init = on_command(
     "cf刷新对话",
     aliases={ "cf初始化"} ,
+    block=config.cf_enableistome,
     priority=25
 )
 set = on_command(
     "cf设定模型",
     aliases={ "cf切换模型"} ,
+    block=config.cf_enableistome,
     priority=25
 )
 getset = on_command(
     "cf当前模型",
+    block=config.cf_enableistome,
     priority=25
 )
 setuser = on_command(
     "cf设定",
+    block=config.cf_enableistome,
     priority=25
 )
 
