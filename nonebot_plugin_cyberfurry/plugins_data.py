@@ -26,7 +26,7 @@ else:
 
 def initdata(
     conf_name,
-    bashdata:dict={"status":1}
+    bashdata:dict | list={"status":1}
 ):
     conf_path = Path(data_dir / conf_name).absolute()
     config_init(conf_path,conf_name,"plugin_data",bashdata)
@@ -53,7 +53,7 @@ def config_init(
     _path_ ,
     conf_name:str ,
     module_name:str="None" ,
-    data:dict={"status":1}
+    data:dict | list ={"status":1}
 ):
     if _path_.is_file():
         logger.opt(colors=True).debug(f"[cubutil]>>><W>{module_name}</>>>>{conf_name}-OK!")

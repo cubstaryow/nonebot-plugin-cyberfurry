@@ -26,7 +26,16 @@ cf设定 设定传入yinying的自身设定
     # 若插件可以保证兼容所有适配器（即仅使用基本适配器功能）可不填写，否则应该列出插件支持的适配器。
 )
 if config.cf_appid == "" or config.cf_token == "" :
-    logger.opt(colors=True).error("cyberfurry缺失核心配置!!!!!取消载入核心!!!")
+    logger.opt(colors=True).error(
+        "cyberfurry缺失核心配置!!!!!取消载入核心!!!"
+    )
 else:
     from .cyberinit import *
-    from .cyberhistory import *
+    from .cyberhistory import * 
+    
+if config.cf_auto:
+    from .cyberauto import *
+else:
+    logger.opt(colors=True).debug(
+        "<red>cyberfurry自动对话推送服务已关闭</red>"
+    )

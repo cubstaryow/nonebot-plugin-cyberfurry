@@ -4,7 +4,7 @@ from .jsondata import (
     defqqname, defqqmodel,
     datetime, writehistory,
     loaddata, savedata,
-    driver
+    driver , setqqpushstatus
 )
 import time
 import json

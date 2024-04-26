@@ -111,6 +111,7 @@ async def cyberfurryrun(
         return 0 
     retmsg , times = await cf.chat(user_id,name,msg)
     maxtimes = cf.maxtimes
+    setqqpushstatus(user_id, False)
     await matcher.send(
         MessageSegment.reply(event.message_id) +
         retmsg +
@@ -198,7 +199,8 @@ async def cyberfurryset(
             defqqname(user_id,{
             "name":"未知",
             "ethnic":"狼",
-            "model":modelname
+            "model":modelname,
+            "push" : False
             })
             msg +="\nWARN-你还未设置设定,请尽快设置\n"
         cf.initchat(user_id)

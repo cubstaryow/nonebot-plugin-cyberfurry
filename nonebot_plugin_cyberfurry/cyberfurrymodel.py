@@ -1,12 +1,18 @@
 import json
 import os
+
+from loguru import logger
 from .config import config
 from .data_source import aidata_demo ,userdata_demo
 
 promptfile = os.path.dirname(__file__)+"/systemprompt.json"
 def getdata():
-    with open(promptfile, "r", encoding="utf-8") as f:
-        data = json.loads(f.read())
+    try:
+        with open(promptfile, "r", encoding="utf-8") as f:
+            data = json.loads(f.read())
+    except:
+        logger.warning("获取插件自带prompt文件数据出现错误!")
+        data = {}
     return data
 def loadcfprompt():
     data = getdata()

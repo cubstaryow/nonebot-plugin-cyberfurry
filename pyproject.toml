@@ -1,6 +1,6 @@
 [project]
 name = "nonebot-plugin-cyberfurry"
-version = "1.4"
+version = "1.5"
 description = "nonebot插件 cyberfurry-与赛博狼狼对话吧~"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,6 +19,7 @@ dependencies = [
   "nonebot-adapter-onebot",
   "nonebot2",
   "nonebot-plugin-localstore",
+  "nonebot-plugin-apscheduler",
   "aiohttp"
 ]
 

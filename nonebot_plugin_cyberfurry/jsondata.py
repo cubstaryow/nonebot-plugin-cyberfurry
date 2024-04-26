@@ -3,13 +3,39 @@ from .plugins_data import initdata,wdata,rdata,driver,data_dir
 import os
 from datetime import datetime
 jsonname = "cyberfurry.json"
+tempname = "cybertemp.json"
 txtdir = "cyberfurry"
 bashdata = {
     "status":1,
     "userdata":{},
-    "userchat":{}
+    "autopush":[]
 }
 initdata(jsonname,bashdata)
+initdata(tempname,{})
+
+
+#====================推送服务========================
+
+def loadpushlist():
+    temp = rdata(jsonname)
+    return temp.get("autopush",[])
+
+def savepushlist(data):
+    temp = rdata(jsonname)
+    temp["autopush"]=data
+    wdata(jsonname,temp)
+
+def setqqpushstatus(
+    user_id :int|str,
+    push :bool = True,
+):
+    
+    temp = rdata(jsonname)
+    temp['userdata'][str(user_id)]["push"]=push
+    wdata(jsonname,temp)
+
+
+#====================历史对话文件存储 测试版========================
 txt_dir =  data_dir / txtdir
 if not os.path.isdir(txt_dir):
     os.mkdir(txt_dir)
@@ -49,8 +75,9 @@ def gethistorytxt(
     else:
         return False
 
+#==================== 核心数据文件存储 ========================
 def getdate():
-    now = datetime.now() # current date and time
+    now = datetime.now()
     date_time = now.strftime("%y%m%d")
     return (date_time)
 
@@ -59,7 +86,8 @@ def defqqname(
     userdata :dict = {
         "name":"未知",
         "ethnic":"狼",
-        "model" :"yinyingllm-v2"
+        "model" :"yinyingllm-v2",
+        "push" : False
     }
 ):
     temp = rdata(jsonname)
@@ -84,15 +112,17 @@ def getqqdata(
     return temp['userdata'].get(str(user_id),{
         "name":"未知",
         "ethnic":"狼",
-        "model" :"yinyingllm-v2"
+        "model" :"yinyingllm-v2",
+        "push" : False
         }
     )
 
+#==================== 重启时的状态重启 ========================
 def loaddata():
-    temp = rdata(jsonname)
-    return temp.get("userchat",{})
+    temp = rdata(tempname)
+    return temp
 
 def savedata(data):
-    temp = rdata(jsonname)
-    temp["userchat"]=data
-    wdata(jsonname,temp)
+    temp = rdata(tempname)
+    temp=data
+    wdata(tempname,temp)
