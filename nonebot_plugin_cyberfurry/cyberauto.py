@@ -91,7 +91,7 @@ async def autochat_scheduler():
         msg , _ = await cf.chat(
             user_id,
             userdata["name"],
-            f"(生成一段想{userdata['name']}找聊天的话,比如“现在已经晚上xx点了欸,你已经很久没有找我聊天了耶w,什么时候来找我说说话qwq”,你不能直接输出这个例句,你必须根据现在的状态生成一句正常的话,本次不能输出心理活动)"
+            f"(生成一段想{userdata['name']}找聊天的话,比如“现在已经晚上xx点了欸,你已经很久没有找我聊天了耶w,什么时候来找我说说话qwq”,你不能直接输出这个例句,你必须根据现在的时间状态生成一句常规对话)"
         )
         try:
             await bot.send_private_msg(user_id=int(user_id), message=msg)
