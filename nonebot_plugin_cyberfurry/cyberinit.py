@@ -162,8 +162,9 @@ async def cyberfurryinit(
     event:MessageEvent,matcher:Matcher
 ):
     user_id = str(event.user_id)
+    chat_id = cf.getchat_id(user_id)
     cf.initchat(user_id)
-    await matcher.send("[幼龙云V5]已刷新对话")
+    await matcher.send(f"[幼龙云V5]已刷新对话\n(上次对话ID-{chat_id})")
 
 @getset.handle()
 async def cyberfurrygetset(

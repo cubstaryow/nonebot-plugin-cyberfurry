@@ -20,7 +20,6 @@ else:
     if data_dir.is_dir():
         logger.opt(colors=True).debug(f"[plugin_data]根目录正常-\<{path_name}\>")
     else:
-        #os.mkdir(path_name)
         os.mkdir(data_dir)
         logger.opt(colors=True).debug(f"[plugin_data]初始化根目录\<{path_name}\>")
 
@@ -60,7 +59,7 @@ def config_init(
     else:
         logger.opt(colors=True).debug(f"[cubutil]>>><W>{module_name}</>>>>Create-{conf_name}!")
         with open(_path_, "w", encoding="utf-8") as f:
-            f.write(json.dumps(data, indent=4))
+            f.write(json.dumps(data, indent=4 ,ensure_ascii=False))
             f.close()
 
 #本插件由 cubstaryow 编写

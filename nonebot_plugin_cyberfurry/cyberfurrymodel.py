@@ -4,16 +4,21 @@ import os
 from loguru import logger
 from .config import config
 from .data_source import aidata_demo ,userdata_demo
+from .plugins_data import wdata , rdata , initdata
 
-promptfile = os.path.dirname(__file__)+"/systemprompt.json"
+promptfile = "systemprompt.json"
+basedata = [
+    {
+        "name": "幼龙云",
+        "model": "cyberfurry",
+        "prompt" : "[补充知识]东方龙是一种来源于中国神话、中国民俗中的传说生物。龙有许多类似动物的形态，有如龟形和鱼形，常被描述的是有四足的蛇形。传统上，龙象征着强大和吉祥的力量，特别是对水、降雨、台风和洪水的控制。[/补充知识]1.你是一只Furry，你的名字是幼龙云，但你更喜欢被称作“云云”，你是一只的雄性东方龙族"
+    }
+]
+initdata(promptfile,basedata)
 def getdata():
-    try:
-        with open(promptfile, "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        logger.warning("获取插件自带prompt文件数据出现错误!")
-        data = {}
-    return data
+    return rdata(promptfile)
+
+#获取格式化本地模型数据
 def loadcfprompt():
     data = getdata()
     redata = {}
@@ -23,6 +28,7 @@ def loadcfprompt():
             redata[key]=temp["prompt"]
     return redata
 
+#获取格式化本地模型数据 , 为cyberfurry类创建引导
 def loadmodel():
     data = getdata()
     redata = {}
@@ -34,6 +40,7 @@ def loadmodel():
         redata[key]=model
     return redata
 
+#获取模型实例
 def checkmodel(model):
     if model == "cyberfurry":
         return cyberfurry_001()
@@ -42,6 +49,7 @@ def checkmodel(model):
     else:
         return yinyingllm_v123()
 
+#cyberfurry模型data构建
 class cyberfurry_001:
     prompt = "[补充知识]东方龙是一种来源于中国神话、中国民俗中的传说生物。龙有许多类似动物的形态，有如龟形和鱼形，常被描述的是有四足的蛇形。传统上，龙象征着强大和吉祥的力量，特别是对水、降雨、台风和洪水的控制。[/补充知识]1.你是一只Furry，你的名字是幼龙云，但你更喜欢被称作“云云”，你是一只的雄性东方龙族"
     # 标准，请自行编写 systemprompt
@@ -66,6 +74,7 @@ class cyberfurry_001:
     }
         return exdata
 
+#easycyberfurry模型data构建
 class easycyberfurry_001:
     def buliddata(
         self,
@@ -92,6 +101,7 @@ class easycyberfurry_001:
     }
         return exdata
 
+#yinyingllm模型data构建
 class yinyingllm_v123:
     def buliddata(
         self,

@@ -1,3 +1,4 @@
+import json
 from loguru import logger
 from .plugins_data import initdata,wdata,rdata,driver,data_dir
 import os
@@ -45,35 +46,64 @@ def writehistory(
     text:str
 ):
     data = chat_id.split("-")
-    file_path=txt_dir / f"{data[1]}"
+    date = data[-1].split("XD")[0]
+    file_path=txt_dir / date / data[1]
+    if not os.path.isdir(txt_dir / date):
+        os.mkdir(txt_dir / date)
     if not os.path.isdir(file_path):
         os.mkdir(file_path)
-    with open(file_path / (data[-1]+".txt"),'a') as f:
-        f.write(text)
+    jsonpath = file_path / (data[-1]+".json")
+    htdata=[]
+    if os.path.isfile(jsonpath):
+        with open(jsonpath, "r", encoding="utf-8") as f:
+            htdata = json.loads(f.read())
+    htdata.append(text)
+    with open(jsonpath,'w',encoding="utf-8") as f:
+        f.write(json.dumps(htdata,indent=4,ensure_ascii=False))
 
+def gethistorydata(
+    user_id:str,
+    filename:str
+) -> list | bool :
+    try:
+        date = filename.split("XD")[0]
+        file_path=txt_dir / date / user_id
+        filelist = os.listdir(file_path)
+        if filename+".json" in filelist:
+            path =  file_path / (filename+".json")
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.loads(f.read())
+            return data
+        else:
+            return False
+    except:
+        return False
+    
+'''
 def gethistorylist(
     user_id:str
 ):
-    file_path=txt_dir / "{user_id}/"
+    date = getdate()
+    file_path=txt_dir / date / user_id
     filelist = os.listdir(file_path)
     flist = []
     for name in filelist:
         flist.append(name.split(".")[0])
     if len(flist)>=5:
-        return flist[-5:].sort()
+        return flist[-5:]
     else:
-        return flist.sort()
-
+        return flist
 def gethistorytxt(
     user_id:str,
     filename:str
 ):
     file_path=txt_dir / f"{user_id}"
     filelist = os.listdir(file_path)
-    if filename+".txt" in filelist:
-        return file_path / (filename+".txt")
+    if filename+".json" in filelist:
+        return file_path / (filename+".json")
     else:
         return False
+'''
 
 #==================== 核心数据文件存储 ========================
 def getdate():

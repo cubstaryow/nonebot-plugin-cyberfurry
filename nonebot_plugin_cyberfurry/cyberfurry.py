@@ -37,7 +37,7 @@ class cyberfurry:
     }
     basemodel = {
         #多模型示例
-        "cyberfurry": cyberfurry_001(),
+        #"cyberfurry": cyberfurry_001(),
         "easycyberfurry": easycyberfurry_001(),
         "yinyingllm-v1": yinyingllm_v123(),
         "yinyingllm-v2": yinyingllm_v123(),
@@ -48,7 +48,7 @@ class cyberfurry:
         **loadmodel()
         }
     localdata=loaddata()
-    maxtimes = 16
+    maxtimes = 20
     userchat = localdata.get('userchat',{})
     usertimes = localdata.get('usertimes',{})
     
@@ -111,6 +111,8 @@ class cyberfurry:
 
     @classmethod
     async def chat(cls, user_id, name, msg):
+        tmp = getqqdata(user_id)
+        modelname = tmp['model']
         times = cls.getsettimes(cls, user_id)
         exdata = cls.makedata(cls, user_id=user_id, name=name)
         exdata['message'] = msg
@@ -132,11 +134,13 @@ class cyberfurry:
             return f"[cyberfurry-E]非预期返回,请检查控制台", 0
         else:
             if times == 1:
-                writehistory(chat_id, resp['model']+"\n")
+                writehistory(chat_id, resp['model'] +"\n"+ modelname)
             writehistory(
-                chat_id, f"[{times:2}/{cls.maxtimes}]  user   :"+msg+"\n")
+                chat_id, f"[{times:2}/{cls.maxtimes}]  user   :"+msg)
             writehistory(
-                chat_id, f"[{times:2}/{cls.maxtimes}]assistant:"+content+"\n")
+                chat_id, f"[{times:2}/{cls.maxtimes}]assistant:"+content)
+            if times == 1:
+                content += f"\n[ID-{chat_id.split('-')[-1]}]"
             if times >= cls.maxtimes:
                 cls.setchat_id(cls, user_id)
                 cls.getsettimes(cls, user_id, settime=0, init=True)

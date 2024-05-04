@@ -31,7 +31,7 @@ if config.cf_appid == "" or config.cf_token == "" :
     )
 else:
     from .cyberinit import *
-    from .cyberhistory import * 
+    from .cyberhistory import *
     
 if config.cf_auto:
     from .cyberauto import *
