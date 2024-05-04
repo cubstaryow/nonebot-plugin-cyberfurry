@@ -30,9 +30,11 @@ def setqqpushstatus(
     user_id :int|str,
     push :bool = True,
 ):
-    
     temp = rdata(jsonname)
-    temp['userdata'][str(user_id)]["push"]=push
+    try:
+        temp['userdata'][str(user_id)]["push"]=push
+    except:
+        pass
     wdata(jsonname,temp)
 
 
