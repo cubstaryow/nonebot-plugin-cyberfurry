@@ -151,7 +151,8 @@ async def cyberfurrysetuser(
             data["name"]=name
             data["ethnic"]=ethnic
             defqqname(user_id,data)
-            await matcher.send(f"[幼龙云V5]:嗯哼,你好,{name}({ethnic})")
+            cf.initchat(user_id)
+            await matcher.send(f"[幼龙云V5]:嗯哼,你好,{name}({ethnic})\n(已自动刷新对话)")
         else:
             await matcher.send(f"{msg}")
     else:

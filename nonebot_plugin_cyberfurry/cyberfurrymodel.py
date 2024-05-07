@@ -51,10 +51,8 @@ def checkmodel(model):
 
 #cyberfurry模型data构建
 class cyberfurry_001:
-    prompt = "[补充知识]东方龙是一种来源于中国神话、中国民俗中的传说生物。龙有许多类似动物的形态，有如龟形和鱼形，常被描述的是有四足的蛇形。传统上，龙象征着强大和吉祥的力量，特别是对水、降雨、台风和洪水的控制。[/补充知识]1.你是一只Furry，你的名字是幼龙云，但你更喜欢被称作“云云”，你是一只的雄性东方龙族"
     # 标准，请自行编写 systemprompt
     systempromptlist=dict({
-        "cyberfurry" : prompt,
         **loadcfprompt()
     })
 
@@ -68,8 +66,8 @@ class cyberfurry_001:
     "appId": config.cf_appid,
     "chatId":f"{config.cf_appid}-{userdata.user_id}-{chat_id}",
     "model":"cyberfurry-001",
-    "systemPrompt":str(self.systempromptlist.get(aidata.model,self.prompt)+
-        f"现在和你对话的是{userdata.name},他是你的朋友,{userdata.name}是一只{userdata.ethnic}"),
+    "systemPrompt":str(self.systempromptlist.get(aidata.model)+
+        f"end. 现在，你遇到了一只furry，他的名字是{userdata.name}，你能看得出来他是一只{userdata.ethnic}"),
     "message":""
     }
         return exdata
