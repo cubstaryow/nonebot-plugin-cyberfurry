@@ -51,6 +51,7 @@ class cyberfurry:
     maxtimes = 20
     userchat = localdata.get('userchat',{})
     usertimes = localdata.get('usertimes',{})
+    userlife  = localdata.get('userlife',{})
     
     localdata={}
 
@@ -59,7 +60,8 @@ class cyberfurry:
     def getuserchat(self):
         return {
             "userchat" : self.userchat,
-            "usertimes": self.usertimes
+            "usertimes": self.usertimes,
+            "userlife": self.userlife
         }
     def setchat_id(self, user_id):
         timeset = int(time.time())
@@ -116,6 +118,7 @@ class cyberfurry:
         times = cls.getsettimes(cls, user_id)
         exdata = cls.makedata(cls, user_id=user_id, name=name)
         exdata['message'] = msg
+        resp = "API无响应内容"
         try:
             data = json.dumps(exdata)
             resp, _,type = await api(
@@ -126,6 +129,7 @@ class cyberfurry:
             
             )
             content: str = resp['choices'][0]['message']['content']
+            role: str = resp['choices'][0]['message']['role']
             chat_id = resp["id"]
         except:
             logger.opt(colors=True).error(
@@ -136,14 +140,65 @@ class cyberfurry:
             if times == 1:
                 writehistory(chat_id, resp['model'] +"\n"+ modelname)
             writehistory(
-                chat_id, f"[{times:2}/{cls.maxtimes}]  user   :"+msg)
+                chat_id, f"[{times:2}/{cls.maxtimes}]user:"+msg)
             writehistory(
-                chat_id, f"[{times:2}/{cls.maxtimes}]assistant:"+content)
+                chat_id, f"[{times:2}/{cls.maxtimes}]{role}:"+content)
             if times == 1:
                 content += f"\n[ID-{chat_id.split('-')[-1]}]"
+            if role !="assistant":
+                cls.getsettimes(cls, user_id, settime=-1)
+                times += -1
             if times >= cls.maxtimes:
                 cls.setchat_id(cls, user_id)
                 cls.getsettimes(cls, user_id, settime=0, init=True)
+            return content, times
+        
+    
+    def getsetlife(
+        cls,
+        user_id:str ,
+        setcycle:int = 0 ,
+        memory:str = None,
+        init:bool = False
+    )->dict:
+        data = cls.userlife.get(user_id,None)
+        if data == None or init == True:
+            cls.userlife[user_id] = {
+                'cycle':0,
+                'memory':""
+            }
+            return cls.userlife[user_id]
+        cls.userlife[user_id]['cycle'] += setcycle
+        if memory != None:
+            cls.userlife[user_id]['memory'] = memory
+        return cls.userlife.get(user_id,None)
+
+
+    @classmethod
+    async def chatlife(cls, user_id, name, msg):
+        times = cls.getsettimes(cls, user_id)
+        exdata = cls.makedata(cls, user_id=user_id, name=name)
+        exdata['message'] = msg
+        resp = "API无响应内容"
+        try:
+            data = json.dumps(exdata)
+            resp, tmp,type = await api(
+                "post",
+                url=apiurl,
+                data=data,
+                headers=cls.headers
+            )
+            content: str = resp['choices'][0]['message']['content']
+            role: str = resp['choices'][0]['message']['role']
+        except:
+            logger.opt(colors=True).error(
+                f"{resp}"
+            )
+            return f"[cyberfurry-E]非预期返回,请检查控制台", 0
+        else:
+            if role !="assistant":
+                cls.getsettimes(cls, user_id, settime=-1)
+                times += -1
             return content, times
     pass
 

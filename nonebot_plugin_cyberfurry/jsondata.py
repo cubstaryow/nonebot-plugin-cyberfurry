@@ -14,6 +14,18 @@ bashdata = {
 initdata(jsonname,bashdata)
 initdata(tempname,{})
 
+#====================cyber生命========================
+
+def setlifemodestatus(
+    user_id :int|str,
+    status :bool = True,
+):
+    temp = rdata(jsonname)
+    try:
+        temp['userdata'][str(user_id)]["lifemode"]=status
+    except:
+        pass
+    wdata(jsonname,temp)
 
 #====================推送服务========================
 

@@ -10,14 +10,16 @@ from nonebot.params import CommandArg
 from nonebot import on_command , on_message
 from nonebot.rule import to_me ,Rule
 from .config import config
+'''
 try:
     from nonebot.adapters.telegram.event import MessageEvent as TGevent
 except:
     TGevent = obV11event
+'''
 
-MessageEvent = obV11event | TGevent
+MessageEvent = obV11event #| TGevent
 
-async def is_enable():
+async def is_enable(event:PrivateMessageEvent):
     return config.cf_enableistome
 
 autorun = on_message(
@@ -29,7 +31,7 @@ run = on_command(
     "/chat",
     aliases={"/yy","/cf"} ,
     block=config.cf_enableistome,
-    priority=25
+    priority=40
 )
 init = on_command(
     "cf刷新对话",
@@ -88,8 +90,42 @@ def checkethnic(ethnic):
     msg ="\n种族只支持:\n[" +"|".join(liste) + "]"
     return False ,msg
 
-    
+def getstatus(event:MessageEvent):
+    user_id = str(event.user_id)
+    userdata = getqqdata(user_id)
+    return userdata.get('lifemode',False)
+from . cyberlife import cyberfurryliferun
+
 @run.handle()
+async def cyberfurrynormalrun(
+    bot:Bot,
+    event:MessageEvent,
+    matcher:Matcher,
+    data: list = CommandArg(),
+):
+    func = cyberfurryrun if not getstatus(event) else cyberfurryliferun
+    await func(
+        bot=bot,
+        event=event,
+        matcher=matcher,
+        data=data
+    )
+
+@autorun.handle()
+async def cyberfurryautorun(
+    bot:Bot,
+    event:MessageEvent,
+    matcher:Matcher
+):
+    func = cyberfurryrun if not getstatus(event) else cyberfurryliferun
+    await func(
+        bot=bot,
+        event=event,
+        matcher=matcher,
+        data=[event.get_message()]
+    )
+
+
 async def cyberfurryrun(
     bot:Bot,
     event:MessageEvent,
@@ -118,19 +154,6 @@ async def cyberfurryrun(
         (f"\n({times}/{maxtimes},将开启新对话)" if times >=maxtimes else f"\n({times}/{maxtimes}轮对话)")
     )
     
-@autorun.handle()
-async def cyberfurryautorun(
-    bot:Bot,
-    event:MessageEvent,
-    matcher:Matcher,
-):
-    await cyberfurryrun(
-        bot=bot,
-        event=event,
-        matcher=matcher,
-        data=[event.get_message()]
-    )
-
 @setuser.handle()
 async def cyberfurrysetuser(
     event:MessageEvent,matcher:Matcher ,args: list = CommandArg()

@@ -1,6 +1,6 @@
 import asyncio
 import random
-from nonebot import on_command , on_regex, require ,logger
+from nonebot import get_bot ,on_command , on_regex, require ,logger
 try:
     require("nonebot_plugin_apscheduler")
     from nonebot_plugin_apscheduler import scheduler
@@ -13,7 +13,6 @@ except:
         "<r><bg #FFCC33>nonebot_plugin_apscheduler未安装，将无法使用定时任务功能</bg #FFCC33></r>"
     )
     
-from nonebot import get_bot
 from nonebot.adapters.onebot.v11 import(
     Bot, ActionFailed,
     PrivateMessageEvent    
