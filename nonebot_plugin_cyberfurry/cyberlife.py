@@ -29,7 +29,7 @@ async def _(
         await matcher.finish("[失败]请先设置你的设定信息\n(cf设定 名字 种族)")
     cf.initchat(user_id)
     if str(args[0]) == "生命模式":
-        msg = "[成功](发癫)我要给...它完整的一生"
+        msg = "[成功](发癫)我要给它...完整的一生"
         setlifemodestatus(user_id,status=True)
     else:
         msg = "[成功]切换为标准对话"
@@ -72,15 +72,17 @@ async def cyberfurryliferun(
     retmsg , times = await cf.chatlife(user_id,"用户",sendmsg + msg)
     othermsg = ""
     if times >= 6:
-        memorysend = "（你需要总结之前的对话的关键信息，以及位置、动作、你的内心状态，以便你形成记忆，方便日后回忆，本次只能输出记忆）"
+        memorysend = "（幼龙云端，记录之前的对话关键信息，同时记录当前所处的位置、你的动作、说话的语气，以及你的感受，以便你将来能够回忆起这段对话。本次只能输出记忆）"
+        #memorysend = "（用简洁的语言概括一下之前的对话，以及位置、动作、说话的语气、你的内心状态，形成记忆，方便日后回忆，本次只能输出记忆）"
         retmemory , _ = await cf.chatlife(user_id,"用户",memorysend)
-        if "行为认知出现混乱" in retmemory:
+        logger.info( retmemory )
+        if "行为认知出现混乱" in retmemory or len(retmemory)<10:
             othermsg += "\n(记忆导出失败...此循环节作废)"
             cf.initchat(user_id)
         else:
+            cf.getsetlife(user_id,setcycle=1,memory=retmemory)
             othermsg += "\n(记忆...进入循环...)"
             cf.initchat(user_id)
-            cf.getsetlife(user_id,setcycle=1,memory=retmemory)
     if "行为认知出现混乱" in retmsg:
         othermsg += "\n(混乱的循环...请<重启循环节>)"
     setqqpushstatus(user_id, False)

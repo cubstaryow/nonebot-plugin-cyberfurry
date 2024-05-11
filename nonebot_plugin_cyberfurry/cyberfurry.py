@@ -155,23 +155,23 @@ class cyberfurry:
         
     
     def getsetlife(
-        cls,
+        self,
         user_id:str ,
         setcycle:int = 0 ,
-        memory:str = None,
+        memory:str | bool = False,
         init:bool = False
     )->dict:
-        data = cls.userlife.get(user_id,None)
+        data = self.userlife.get(user_id,None)
         if data == None or init == True:
-            cls.userlife[user_id] = {
+            self.userlife[user_id] = {
                 'cycle':0,
                 'memory':""
             }
-            return cls.userlife[user_id]
-        cls.userlife[user_id]['cycle'] += setcycle
-        if memory != None:
-            cls.userlife[user_id]['memory'] = memory
-        return cls.userlife.get(user_id,None)
+            return self.userlife[user_id]
+        self.userlife[user_id]['cycle'] += setcycle
+        if memory:
+            self.userlife[user_id]['memory'] = memory
+        return self.userlife.get(user_id,None)
 
 
     @classmethod
