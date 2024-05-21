@@ -1,6 +1,6 @@
 
 from nonebot.adapters.onebot.v11 import (
-   Bot ,MessageSegment , PrivateMessageEvent
+   Bot ,MessageSegment , PrivateMessageEvent ,Message
 )
 from nonebot.matcher import Matcher
 from .cyberfurry import *
@@ -118,11 +118,14 @@ async def cyberfurryautorun(
     matcher:Matcher
 ):
     func = cyberfurryrun if not getstatus(event) else cyberfurryliferun
+    message = event.get_message()
+    if len(message['text'])==0:
+        return
     await func(
         bot=bot,
         event=event,
         matcher=matcher,
-        data=[event.get_message()]
+        data=[message]
     )
 
 
@@ -134,7 +137,10 @@ async def cyberfurryrun(
 ):
     if len(data)==0:
         return 0
-    msg = str(data[0])
+    msg = Message(data[0]).extract_plain_text()
+    if msg == "":
+        await matcher.send("[幼龙云V5]提取可用消息失败,不能发送空消息")
+        return 0
     user_id = str(event.user_id)
     matchObj ,_= checkmsg(msg)
     if not matchObj:
@@ -146,13 +152,21 @@ async def cyberfurryrun(
         await matcher.send(MessageSegment.reply(event.message_id)+"太长力xw")
         return 0 
     retmsg , times = await cf.chat(user_id,name,msg)
-    maxtimes = cf.maxtimes
-    setqqpushstatus(user_id, False)
-    await matcher.send(
-        MessageSegment.reply(event.message_id) +
-        retmsg +
-        (f"\n({times}/{maxtimes},将开启新对话)" if times >=maxtimes else f"\n({times}/{maxtimes}轮对话)")
-    )
+    if  "刷新对话试试吧" in retmsg:
+        cf.initchat(user_id)
+        await matcher.send(
+            MessageSegment.reply(event.message_id) +
+            retmsg +
+            "\n(已遵从API端提示自动刷新)"
+        )
+    else:
+        maxtimes = cf.maxtimes
+        setqqpushstatus(user_id, False)
+        await matcher.send(
+            MessageSegment.reply(event.message_id) +
+            retmsg +
+            (f"\n({times}/{maxtimes},将开启新对话)" if times >=maxtimes else f"\n({times}/{maxtimes}轮对话)")
+        )
     
 @setuser.handle()
 async def cyberfurrysetuser(
