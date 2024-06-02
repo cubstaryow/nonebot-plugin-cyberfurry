@@ -148,9 +148,9 @@ async def cyberfurryrun(
         return 0
     userinfo = await bot.get_stranger_info(user_id=user_id)
     name = userinfo.get("nickname","未知")
-    if len(msg) > 75:
-        await matcher.send(MessageSegment.reply(event.message_id)+"太长力xw")
-        return 0 
+    #if len(msg) > 1000:
+    #    await matcher.send(MessageSegment.reply(event.message_id)+"太长力xw")
+    #    return 0 
     retmsg , times = await cf.chat(user_id,name,msg)
     if  "刷新对话试试吧" in retmsg:
         cf.initchat(user_id)
