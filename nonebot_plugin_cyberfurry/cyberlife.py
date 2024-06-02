@@ -72,7 +72,7 @@ async def cyberfurryliferun(
     retmsg , times = await cf.chatlife(user_id,"用户",sendmsg + msg)
     othermsg = ""
     if times >= 6:
-        memorysend = "（幼龙云端，详细记录之前的对话核心信息，同时记录当前所处的位置、你的动作、说话的语气，以及你的感受，以便你将来能够回忆起这段对话。本次只能输出记忆）"
+        memorysend = "（详细记录之前的对话核心信息，同时记录当前所处的位置、你的动作、说话的语气，以及你的感受，以便你将来能够回忆起这段对话。本次只能输出记忆）"
         #memorysend = "（用简洁的语言概括一下之前的对话，以及位置、动作、说话的语气、你的内心状态，形成记忆，方便日后回忆，本次只能输出记忆）"
         retmemory , _ = await cf.chatlife(user_id,"用户",memorysend)
         logger.info( retmemory )

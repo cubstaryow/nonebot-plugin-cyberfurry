@@ -60,7 +60,7 @@ async def msglist_add( msg_list , data ,user_id):
         {
             "type": "node",
             "data": {
-                "name":"幼龙云端核心-cyberfurry",
+                "name":"cyberfurry",
                 "uin": user_id,
                 "content": data
                 }

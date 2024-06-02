@@ -139,12 +139,12 @@ async def cyberfurryrun(
         return 0
     msg = Message(data[0]).extract_plain_text()
     if msg == "":
-        await matcher.send("[幼龙云V5]提取可用消息失败,不能发送空消息")
+        await matcher.send("[cyberfurry]提取可用消息失败,不能发送空消息")
         return 0
     user_id = str(event.user_id)
     matchObj ,_= checkmsg(msg)
     if not matchObj:
-        await matcher.send("[幼龙云V5]:参数体不当...停止响应")
+        await matcher.send("[cyberfurry]:参数体不当...停止响应")
         return 0
     userinfo = await bot.get_stranger_info(user_id=user_id)
     name = userinfo.get("nickname","未知")
@@ -179,7 +179,7 @@ async def cyberfurrysetuser(
     if (len(data)>=2):
         name = data[0]
         ethnic = data[1]
-        msg = "[幼龙云V5]:出现问题"
+        msg = "[cyberfurry]:出现问题"
         key1 ,msg1=checkmsg(name)
         key2 ,msg2= checkethnic(ethnic)
         msg+=msg1+msg2
@@ -189,11 +189,11 @@ async def cyberfurrysetuser(
             data["ethnic"]=ethnic
             defqqname(user_id,data)
             cf.initchat(user_id)
-            await matcher.send(f"[幼龙云V5]:嗯哼,你好,{name}({ethnic})\n(已自动刷新对话)")
+            await matcher.send(f"[cyberfurry]:嗯哼,你好,{name}({ethnic})\n(已自动刷新对话)")
         else:
             await matcher.send(f"{msg}")
     else:
-        await matcher.send("[幼龙云V5]参数不完整,应为\ncf设定 名称 种族(只支持常用种族)")
+        await matcher.send("[cyberfurry]参数不完整,应为\ncf设定 名称 种族(只支持常用种族)")
 
 @init.handle()
 async def cyberfurryinit(
@@ -202,14 +202,14 @@ async def cyberfurryinit(
     user_id = str(event.user_id)
     chat_id = cf.getchat_id(user_id)
     cf.initchat(user_id)
-    await matcher.send(f"[幼龙云V5]已刷新对话\n(上次对话ID-{chat_id})")
+    await matcher.send(f"[cyberfurry]已刷新对话\n(上次对话ID-{chat_id})")
 
 @getset.handle()
 async def cyberfurrygetset(
     event:MessageEvent,matcher:Matcher
 ):
     user_id = str(event.user_id)
-    msg="[幼龙云V5]"
+    msg="[cyberfurry]"
     data = getqqdata(user_id)
     msg +=f"当前模型[{data['model']}]"
     await matcher.send(msg)
@@ -230,7 +230,7 @@ async def cyberfurryset(
 ):
     modelname = str(data[0])
     user_id = str(event.user_id)
-    msg="[幼龙云V5]"
+    msg="[cyberfurry]"
     if cf.model.get(modelname,None) != None:
         try:
             defqqmodel(user_id,modelname)
