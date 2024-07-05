@@ -39,9 +39,9 @@ class cyberfurry:
         #多模型示例
         #"cyberfurry": cyberfurry_001(),
         "easycyberfurry": easycyberfurry_001(),
-        "yinyingllm-v1": yinyingllm_v123(),
+        #"yinyingllm-v1": yinyingllm_v123(),
         "yinyingllm-v2": yinyingllm_v123(),
-        "yinyingllm-v3": yinyingllm_v123()
+        #"yinyingllm-v3": yinyingllm_v123()
     }
     model ={
         **basemodel,
