@@ -100,6 +100,7 @@ async def autochat_scheduler():
             savepushlist(pushlist)
         await asyncio.sleep( random.randint(5, 30))
 
+
 async def autochatgroup_scheduler():
     bot: Bot = get_bot()
     group_list = await bot.get_group_list()
@@ -107,7 +108,7 @@ async def autochatgroup_scheduler():
         group_id = groupinfo['group_id']
         if str(group_id) in config.cf_autogrouplist:
             if random.randint(1, 100) < 20:
-                msg = "[Auto]银影:\n(悄悄的看群里正在干嘛)qwq"
+                msg = "[Auto](悄悄的看群里正在干嘛)qwq"
                 await bot.send_group_msg(group_id=int(group_id), message=msg)
 
 
