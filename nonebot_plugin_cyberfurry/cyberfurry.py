@@ -16,10 +16,11 @@ from .cyberfurrymodel import (
     cyberfurry_001,
     easycyberfurry_001,
     yinyingllm_v123,
+    yinyingNG,
     config,
     loadmodel
 )
-cftype = cyberfurry_001 | easycyberfurry_001 | yinyingllm_v123
+cftype = cyberfurry_001 | easycyberfurry_001 | yinyingllm_v123 | yinyingNG
 
 apiurl = "https://api-yinying-ng.wingmark.cn/v1/chatWithCyberFurry"
 
@@ -39,16 +40,14 @@ class cyberfurry:
         #多模型示例
         #"cyberfurry": cyberfurry_001(),
         "easycyberfurry": easycyberfurry_001(),
-        #"yinyingllm-v1": yinyingllm_v123(),
-        "yinyingllm-v2": yinyingllm_v123(),
-        #"yinyingllm-v3": yinyingllm_v123()
+        "yinying": yinyingllm_v123(),
     }
     model ={
         **basemodel,
-        **loadmodel()
+        **loadmodel() #配置文件读取并载入
         }
     localdata=loaddata()
-    maxtimes = 20
+    maxtimes = 50
     userchat = localdata.get('userchat',{})
     usertimes = localdata.get('usertimes',{})
     userlife  = localdata.get('userlife',{})
@@ -135,7 +134,7 @@ class cyberfurry:
             logger.opt(colors=True).error(
                 f"{resp}"
             )
-            return f"[cyberfurry-E]非预期返回,请检查控制台", 0
+            return f"[cyberfurry-E]非预期返回,出错于-api返回值处理\n>{resp.get('data')}", 0
         else:
             if times == 1:
                 writehistory(chat_id, resp['model'] +"\n"+ modelname)
@@ -194,7 +193,7 @@ class cyberfurry:
             logger.opt(colors=True).error(
                 f"{resp}"
             )
-            return f"[cyberfurry-E]非预期返回,请检查控制台", 0
+            return f"[cyberfurry-E]非预期返回,出错于-api返回值处理\n>{resp.get('data')}", 0
         else:
             if role !="assistant":
                 cls.getsettimes(cls, user_id, settime=-1)

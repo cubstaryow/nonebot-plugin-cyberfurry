@@ -93,31 +93,6 @@ def gethistorydata(
     except:
         return False
     
-'''
-def gethistorylist(
-    user_id:str
-):
-    date = getdate()
-    file_path=txt_dir / date / user_id
-    filelist = os.listdir(file_path)
-    flist = []
-    for name in filelist:
-        flist.append(name.split(".")[0])
-    if len(flist)>=5:
-        return flist[-5:]
-    else:
-        return flist
-def gethistorytxt(
-    user_id:str,
-    filename:str
-):
-    file_path=txt_dir / f"{user_id}"
-    filelist = os.listdir(file_path)
-    if filename+".json" in filelist:
-        return file_path / (filename+".json")
-    else:
-        return False
-'''
 
 #==================== 核心数据文件存储 ========================
 def getdate():
@@ -130,7 +105,7 @@ def defqqname(
     userdata :dict = {
         "name":"未知",
         "ethnic":"狼",
-        "model" :"yinyingllm-v2",
+        "model" :"yinying",
         "push" : False
     }
 ):
@@ -156,7 +131,7 @@ def getqqdata(
     return temp['userdata'].get(str(user_id),{
         "name":"未知",
         "ethnic":"狼",
-        "model" :"yinyingllm-v2",
+        "model" :"yinying",
         "push" : False
         }
     )

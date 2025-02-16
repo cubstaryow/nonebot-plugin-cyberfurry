@@ -6,8 +6,8 @@ class aidata_demo(BaseModel):
     cfConAge :  str ="child"    #easycyberfurry_001
     cfConStyle: str ="sentiment"    #easycyberfurry_001
     story :     str ="幼龙云端核心服务器集群中诞生的智慧生命体"         #easycyberfurry_001
-    promptPatch:str =""         #yinyingllm_v2
-    model :     str ="yinyingllm-v2" #yinyingllm_v1_v3    
+    promptPatch:str =""         #yinyingllm
+    model :     str ="yinying" #yinyingllm  模型被路由为指定模型 此处作为易理解处理
 
 class userdata_demo(BaseModel):
     user_id:    str =""
