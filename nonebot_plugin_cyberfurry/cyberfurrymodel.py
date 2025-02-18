@@ -110,7 +110,7 @@ class yinyingllm_v123:
         exdata = {
     "appId": config.cf_appid,
     "chatId":f"{config.cf_appid}-{userdata.user_id}-{chat_id}",
-    "model":"yinyingllm-v2",
+    "model":"yinyingllm-latest",
     "variables": {
         "nickName":userdata.name,
         "furryCharacter":f"一只{userdata.ethnic}",
