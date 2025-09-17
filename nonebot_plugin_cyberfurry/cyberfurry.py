@@ -16,11 +16,10 @@ from .cyberfurrymodel import (
     cyberfurry_001,
     easycyberfurry_001,
     yinyingllm_v123,
-    yinyingNG,
     config,
     loadmodel
 )
-cftype = cyberfurry_001 | easycyberfurry_001 | yinyingllm_v123 | yinyingNG
+cftype = cyberfurry_001 | easycyberfurry_001 | yinyingllm_v123
 
 apiurl = "https://api-yinying-ng.wingmark.cn/v1/chatWithCyberFurry"
 
